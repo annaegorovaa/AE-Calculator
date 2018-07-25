@@ -1,6 +1,6 @@
 let a = 0;
 let b = 0;
-let operand = '';
+let operation = '';
 
 function read() {
     return +document.getElementById('result').value || 0;
@@ -11,7 +11,7 @@ function write(value) {
 }
 
 function toInput(value) {
-    if (operand) {
+    if (operation) {
         if (b) {
             b = read() + value;
             write(b);
@@ -26,27 +26,27 @@ function toInput(value) {
 
 function subtract(){
     a = read();
-    operand = '-';
+    operation = '-';
 }
 
 function addNum() {
     a = read();
-    operand = '+';
+    operation = '+';
 }
 
 function multiply() {
     a = read();
-    operand = '*';
+    operation = '*';
 }
 
 function divide() {
     a = read();
-    operand = '/';
+    operation = '/';
 }
 
 function getResult() {
-    if (operand) {
-        switch (operand) {
+    if (operation) {
+        switch (operation) {
             case '-':
                 write(a - b);
                 break;
@@ -66,5 +66,5 @@ function getResult() {
 function clearValue() {
     document.getElementById('result').value = '0';
     a = b = 0;
-    operand = '';
+    operation = '';
 }
