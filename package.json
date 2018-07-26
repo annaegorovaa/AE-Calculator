@@ -1,0 +1,22 @@
+{
+  "name": "html",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iskotar/Main-HTML.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iskotar/Main-HTML/issues"
+  },
+  "homepage": "https://github.com/iskotar/Main-HTML#readme",
+  "devDependencies": {
+    "eslint": "^5.2.0"
+  }
+}
