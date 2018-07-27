@@ -11,13 +11,6 @@ function write(value) {
 }
 
 function toInput(value) {
-  if(operation && b === null  ) {
-    if (value !== '.'){
-      write('');
-    } else {
-      write('0');
-    }
-  }
   if (value === '.' && !read().includes('.')) {
     write(read() + value);
   } else if (value === '0' && read().includes('.')) {
