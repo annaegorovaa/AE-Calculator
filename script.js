@@ -32,6 +32,7 @@ function subtract(){
   if(!operation) {
     a = Number(read());
     operation = '-';
+    write('0');
   } else {
     getResult();
   }
@@ -41,6 +42,7 @@ function addNum() {
   if(!operation) {
     a = Number(read());
     operation = '+';
+    write('0');
   } else {
     getResult();
   }
@@ -50,6 +52,7 @@ function multiply() {
   if(!operation) {
     a = Number(read());
     operation = '*';
+    write('0');
   } else {
     getResult();
   }
@@ -59,6 +62,7 @@ function divide() {
   if(!operation) {
     a = Number(read());
     operation = '/';
+    write('0');
   } else {
     getResult();
   }
@@ -93,7 +97,7 @@ function getResult() {
 }
 
 function clearValue() {
-  document.getElementById('result').value = '0';
+  write('0');
   a = b = null;
   operation = '';
 }
