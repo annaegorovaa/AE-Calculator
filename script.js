@@ -14,20 +14,10 @@ function toInput(value) {
   if (firstDigit) {
     write('');
   }
-  if (value === '.' && !read().includes('.')) {
-    write(read() + value);
-  } else if (value === '0' && read().includes('.')) {
-    write(read() + value);
-  } else if (value !== '0' && value !== '.') {
-    if (read().includes('.')) {
-      write(read() + value);
-    } else {
-      if (read()[0] === '0') {
-        write(read().substring(1) + value);
-      } else {
-        write(read() + value);
-      }
-    }
+  if ((firstDigit && value === '0') || (read().includes('.') && value === '.')) {
+    return;
+  } else {
+    (read()[0] === '0' && read().length < 2 && value !== '.' ) ? write(read().substring(1) + value) : write(read() + value);
   }
   firstDigit = false;
 }
