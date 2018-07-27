@@ -1,5 +1,5 @@
-let a = 0;
-let b = 0;
+let a = null;
+let b = null;
 let operation = '';
 
 function read() {
@@ -11,36 +11,40 @@ function write(value) {
 }
 
 function toInput(value) {
-  if (operation) {
-    if (b) {
-      b = read() + value;
-      write(b);
-    } else {
-      write(value);
-      b = value;
-    }
-  } else {
+  if (value === '.' && !read().includes('.')) {
     write(read() + value);
+  } else if (value === '0' && read().includes('.')) {
+    write(read() + value);
+  } else if (value !== '0' && value !== '.') {
+    if (read().includes('.')) {
+      write(read() + value);
+    } else {
+      if (read()[0] === '0') {
+        write(read().substring(1) + value);
+      } else {
+        write(read() + value);
+      }
+    }
   }
 }
 
 function subtract(){
-  a = read();
+  a = Number(read());
   operation = '-';
 }
 
 function addNum() {
-  a = read();
+  a = Number(read());
   operation = '+';
 }
 
 function multiply() {
-  a = read();
+  a = Number(read());
   operation = '*';
 }
 
 function divide() {
-  a = read();
+  a = Number(read());
   operation = '/';
 }
 
@@ -51,7 +55,7 @@ function getResult() {
         write(a - b);
         break;
       case '+':
-        write(a + +b);
+        write(a + b);
         break;
       case '*':
         write(a * b);
@@ -65,6 +69,6 @@ function getResult() {
 
 function clearValue() {
   document.getElementById('result').value = '0';
-  a = b = 0;
+  a = b = null;
   operation = '';
 }
