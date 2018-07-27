@@ -1,6 +1,6 @@
-let a = null;
-let b = null;
-let operation = '';
+let memory = null;
+let operation = null;
+let firstDigit = true;
 
 function read() {
   return document.getElementById('result').value || '0';
@@ -11,6 +11,9 @@ function write(value) {
 }
 
 function toInput(value) {
+  if (firstDigit) {
+    write('');
+  }
   if (value === '.' && !read().includes('.')) {
     write(read() + value);
   } else if (value === '0' && read().includes('.')) {
@@ -26,42 +29,45 @@ function toInput(value) {
       }
     }
   }
+  firstDigit = false;
 }
 
 function operate(value){
   if(!operation) {
-    a = Number(read());
+    memory = Number(read());
     operation = value;
-    write('0');
+    firstDigit = true;
   } else {
     getResult();
   }
 }
 
 function getResult() {
-  b = Number(read());
+  let b = Number(read());
   if (operation) {
     switch (operation) {
       case '-':
-        write(a - b);
+        write(memory - b);
         break;
       case '+':
-        write(a + b);
+        write(memory + b);
         break;
       case '*':
-        write(a * b);
+        write(memory * b);
         break;
       case '/':
-        write(a / b);
+        write(memory / b);
         break;
     }
-    a = Number(read());
+    memory = Number(read());
     b = null;
+    firstDigit = true;
   }
 }
 
 function clearValue() {
   write('0');
-  a = b = null;
-  operation = '';
+  memory = null;
+  operation = null;
+  firstDigit = true;
 }
