@@ -11,6 +11,13 @@ function write(value) {
 }
 
 function toInput(value) {
+  if(operation && b === null  ) {
+    if (value !== '.'){
+      write('');
+    } else {
+      write('0');
+    }
+  }
   if (value === '.' && !read().includes('.')) {
     write(read() + value);
   } else if (value === '0' && read().includes('.')) {
@@ -29,39 +36,64 @@ function toInput(value) {
 }
 
 function subtract(){
-  a = Number(read());
-  operation = '-';
+  if(!operation) {
+    a = Number(read());
+    operation = '-';
+  } else {
+    getResult();
+  }
 }
 
 function addNum() {
-  a = Number(read());
-  operation = '+';
+  if(!operation) {
+    a = Number(read());
+    operation = '+';
+  } else {
+    getResult();
+  }
 }
 
 function multiply() {
-  a = Number(read());
-  operation = '*';
+  if(!operation) {
+    a = Number(read());
+    operation = '*';
+  } else {
+    getResult();
+  }
 }
 
 function divide() {
-  a = Number(read());
-  operation = '/';
+  if(!operation) {
+    a = Number(read());
+    operation = '/';
+  } else {
+    getResult();
+  }
 }
 
 function getResult() {
+  b = Number(read());
   if (operation) {
     switch (operation) {
       case '-':
         write(a - b);
+        a = Number(read());
+        b = null;
         break;
       case '+':
         write(a + b);
+        a = Number(read());
+        b = null;
         break;
       case '*':
         write(a * b);
+        a = Number(read());
+        b = null;
         break;
       case '/':
         write(a / b);
+        a = Number(read());
+        b = null;
         break;
     }
   }
