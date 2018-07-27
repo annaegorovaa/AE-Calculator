@@ -28,40 +28,10 @@ function toInput(value) {
   }
 }
 
-function subtract(){
+function operate(value){
   if(!operation) {
     a = Number(read());
-    operation = '-';
-    write('0');
-  } else {
-    getResult();
-  }
-}
-
-function addNum() {
-  if(!operation) {
-    a = Number(read());
-    operation = '+';
-    write('0');
-  } else {
-    getResult();
-  }
-}
-
-function multiply() {
-  if(!operation) {
-    a = Number(read());
-    operation = '*';
-    write('0');
-  } else {
-    getResult();
-  }
-}
-
-function divide() {
-  if(!operation) {
-    a = Number(read());
-    operation = '/';
+    operation = value;
     write('0');
   } else {
     getResult();
@@ -74,25 +44,19 @@ function getResult() {
     switch (operation) {
       case '-':
         write(a - b);
-        a = Number(read());
-        b = null;
         break;
       case '+':
         write(a + b);
-        a = Number(read());
-        b = null;
         break;
       case '*':
         write(a * b);
-        a = Number(read());
-        b = null;
         break;
       case '/':
         write(a / b);
-        a = Number(read());
-        b = null;
         break;
     }
+    a = Number(read());
+    b = null;
   }
 }
 
