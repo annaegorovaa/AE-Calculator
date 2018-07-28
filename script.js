@@ -17,7 +17,13 @@ function toInput(value) {
   if ((firstDigit && value === '0') || (read().includes('.') && value === '.')) {
     return;
   } else {
-    (read()[0] === '0' && read().length < 2 && value !== '.' ) ? write(read().substring(1) + value) : write(read() + value);
+    if (read()[0] === '0' && read().length < 2 && value !== '.' ) {
+      write(read().substring(1) + value);
+    } else if (read()[0] === '-' && read().length < 2 && value === '.'){
+      write(read() + '0' + value);
+    } else {
+      write(read() + value);
+    }
   }
   firstDigit = false;
 }
@@ -35,7 +41,7 @@ function operate(value){
 
 function changeSign() {
   if (firstDigit) {
-    write('-');
+    memory && !operation ? write(read()[0] === '-' ? read().substring(1) : '-' + read()) : write('-');
     firstDigit = false;
   } else {
     if (read()[0] === '-') {
@@ -50,7 +56,8 @@ function changeSign() {
 }
 
 function calcPercent() {
-  //TODO
+  write(Number(read()) * memory / 100);
+  getResult();
 }
 
 function getResult() {
