@@ -3,14 +3,14 @@ let operation = null;
 let firstDigit = true;
 
 function read() {
-  return document.getElementById('result').value || '0';
+  return document.getElementById('display').value || '0';
 }
 
 function write(value) {
-  document.getElementById('result').value = value;
+  document.getElementById('display').value = value;
 }
 
-function toInput(value) {
+function addSymbol(value) {
   if (firstDigit) {
     write('');
   }
@@ -28,13 +28,13 @@ function toInput(value) {
   firstDigit = false;
 }
 
-function operate(value){
+function addOperation(value){
   if(!operation) {
     memory = Number(read());
     operation = value;
     firstDigit = true;
   } else {
-    getResult();
+    calcResult();
     operation = value;
   }
 }
@@ -57,10 +57,10 @@ function changeSign() {
 
 function calcPercent() {
   write(Number(read()) * memory / 100);
-  getResult();
+  calcResult();
 }
 
-function getResult() {
+function calcResult() {
   let b = Number(read());
   if (operation) {
     switch (operation) {
