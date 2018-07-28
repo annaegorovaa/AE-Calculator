@@ -2,36 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JS1 HTML</title>
-    <link href="styles.css" rel="stylesheet" type="text/css">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Our project</h1>
-    <p>Каждый добавляет кнопку со своим номером, используя новую ветку.
-    И делаете Commit</p>
-    <hr>
-    <input type="text" id="display" placeholder="0">
-    <hr>
-    <button class="button" id="1" value="1" onclick="addSymbol('1')">1</button>
-    <button class="button" id="2" value="2" onclick="addSymbol('2')">2</button>
-    <button class="button" id="3" value="3" onclick="addSymbol('3')">3</button>
-    <button class="button" id="4" value="4" onclick="addSymbol('4')">4</button>
-    <button class="button" id="5" value="5" onclick="addSymbol('5')">5</button>
-    <button class="button" id="6" value="6" onclick="addSymbol('6')">6</button>
-    <button class="button" id="7" value="7" onclick="addSymbol('7')">7</button>
-    <button class="button" id="8" value="8" onclick="addSymbol('8')">8</button>
-    <button class="button" id="9" value="9" onclick="addSymbol('9')">9</button>
-    <button class="button" id="0" value="0" onclick="addSymbol('0')">0</button>
-    <button class="button" id="." value="." onclick="addSymbol('.')">.</button>
-    <button class="button" onclick="addOperation('-')">-</button>
-    <button class="button" onclick="addOperation('+')">+</button>
-    <button class="button" onclick="addOperation('*')">*</button>
-    <button class="button" onclick="addOperation('/')">/</button>
-    <button class="button" onclick="calcPercent()">%</button>
-    <button class="button" onclick="changeSign()">-/+</button>
-    <button class="button" onclick="calcResult()">=</button>
-    <br>
-    <button class="button" onclick="clearValue()">C</button>
+<div class="container">
+<h1 class="display-2 mx-auto" style="width: 375px;">Calculator</h1>
+    <input class="form-control form-control-lg" type="text" id="display" placeholder="0">
+    <div class="container">
+        <div class="row">
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="7" value="7" onclick="addSymbol('7')">7</button></div>
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="8" value="8" onclick="addSymbol('8')">8</button></div>
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="9" value="9" onclick="addSymbol('9')">9</button></div>
+        <div class="col-sm"><button class="btn btn-secondary btn-lg btn-block" onclick="addOperation('/')">/</button></div>
+        </div>
+        <div class="row">
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="4" value="4" onclick="addSymbol('4')">4</button></div>
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="5" value="5" onclick="addSymbol('5')">5</button></div>
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="6" value="6" onclick="addSymbol('6')">6</button></div>
+        <div class="col-sm"><button class="btn btn-secondary btn-lg btn-block" onclick="addOperation('*')">*</button></div>
+        </div>
+        <div class="row">
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="1" value="1" onclick="addSymbol('1')">1</button></div>
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="2" value="2" onclick="addSymbol('2')">2</button></div>
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="3" value="3" onclick="addSymbol('3')">3</button></div>
+        <div class="col-sm"><button class="btn btn-secondary btn-lg btn-block" onclick="addOperation('-')">-</button></div>
+        </div>
+        <div class="row">
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" onclick="changeSign()">-/+</button></div>
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="0" value="0" onclick="addSymbol('0')">0</button></div>
+        <div class="col-sm"><button class="btn btn-info btn-lg btn-block" id="." value="." onclick="addSymbol('.')">.</button></div>
+        <div class="col-sm"><button class="btn btn-secondary btn-lg btn-block" onclick="addOperation('+')">+</button></div>
+        </div>
+        <div class="row">
+        <div class="col-sm"><button class="btn btn-danger btn-lg btn-block" onclick="clearValue()">C</button></div>
+        <div class="col-sm-3"><button class="btn btn-secondary btn-lg btn-block" onclick="calcPercent()">%</button></div>
+        <div class="col-sm-3"><button class="btn btn-secondary btn-lg btn-block" onclick="calcResult()">=</button></div>
+        </div>
+    </div>
+</div>
     <script type class="application/javascript" src="script.js"></script>
 </body>
 </html>
