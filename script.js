@@ -34,10 +34,15 @@ function operate(value){
 
 function changeSign() {
   if (read()[0] === '-') {
-    if (read().length === 1) {
-      firstDigit = true;
+    if (firstDigit) {
+      write('-');
+      firstDigit = false;
+    } else {
+      if (read().length === 1) {
+        firstDigit = true;
+      }
+      write(read().substring(1));
     }
-    write(read().substring(1));
   } else {
     if (firstDigit) {
       write('-');
@@ -46,6 +51,10 @@ function changeSign() {
       write('-' + read());
     }
   }
+}
+
+function calcPercent() {
+
 }
 
 function getResult() {
