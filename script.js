@@ -1,6 +1,7 @@
 let memory = null;
 let operation = null;
 let firstDigit = true;
+let test45 = '';
 
 function read() {
   return document.getElementById('display').value || '0';
