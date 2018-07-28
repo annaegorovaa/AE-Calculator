@@ -32,6 +32,22 @@ function operate(value){
   }
 }
 
+function changeSign() {
+  if (read()[0] === '-') {
+    if (read().length === 1) {
+      firstDigit = true;
+    }
+    write(read().substring(1));
+  } else {
+    if (firstDigit) {
+      write('-');
+      firstDigit = false;
+    } else{
+      write('-' + read());
+    }
+  }
+}
+
 function getResult() {
   let b = Number(read());
   if (operation) {
@@ -51,6 +67,7 @@ function getResult() {
     }
     memory = Number(read());
     b = null;
+    operation = null;
     firstDigit = true;
   }
 }
