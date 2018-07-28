@@ -10,20 +10,40 @@ function write(value) {
   document.getElementById('display').value = value;
 }
 
+document.onkeypress = typeSymbol;
+
+function typeSymbol(event) {
+  let x = event.key || event.which;
+  console.log(x);
+  if (x.match(/[0-9]/)) {
+    addSymbol(x);
+  } else if (x.match(/[/*-+]/)) {
+    addOperation(x);
+  } else if (x === '%') {
+    calcPercent();
+  } else if (x === 'Enter') {
+    calcResult();
+  } else if (x === 'Escape') {
+    clearValue();
+  } else {
+    return;
+  }
+  event.preventDefault();
+}
+
 function addSymbol(value) {
   if (firstDigit) {
     write('');
   }
   if ((firstDigit && value === '0') || (read().includes('.') && value === '.')) {
     return;
+  }
+  if (read()[0] === '0' && read().length < 2 && value !== '.' ) {
+    write(read().substring(1) + value);
+  } else if (read()[0] === '-' && read().length < 2 && value === '.'){
+    write(read() + '0' + value);
   } else {
-    if (read()[0] === '0' && read().length < 2 && value !== '.' ) {
-      write(read().substring(1) + value);
-    } else if (read()[0] === '-' && read().length < 2 && value === '.'){
-      write(read() + '0' + value);
-    } else {
-      write(read() + value);
-    }
+    write(read() + value);
   }
   firstDigit = false;
 }
