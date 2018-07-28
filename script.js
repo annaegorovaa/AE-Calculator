@@ -29,6 +29,7 @@ function operate(value){
     firstDigit = true;
   } else {
     getResult();
+    operation = value;
   }
 }
 
