@@ -10,7 +10,7 @@
     <p>Каждый добавляет кнопку со своим номером, используя новую ветку.
     И делаете Commit</p>
     <hr>
-    <input type="text" id="result">
+    <input type="text" id="result" placeholder="0">
     <br>
     <button class="button" id="mins" value="-" onclick="initAction('-')">-</button>
     <button class="button" id="0" value="0" onclick="toInput('0')">0</button>
@@ -28,10 +28,13 @@
     <button class="button" id="8" value="8" onclick="toInput('8')">8</button>
     <button class="button" id="9" value="9" onclick="toInput('9')">9</button>
     <br>
+    <button class="button" id="." value="." onclick="toInput('.')">.</button>
+    <button class="button" id="change-sign" value="+/-" onclick="changeSign()">+/-</button>
+    <br>
     <button class="button" id="div" value="/" onclick="initAction('/')">/</button>
     <button class="button" id="mult" value="*" onclick="initAction('*')">X</button>
     <button class="button" id="equa" value="=" onclick="getResult()">=</button>
-    <button class="button" onclick="clearToInitialState()">C</button>
+    <button class="button" onclick="clearValue()">C</button>
     <script type class="application/javascript" src="script.js"></script>
 </body>
 </html>

@@ -1,78 +1,86 @@
-let a=0,
+let a = null,
   initialState = true,
   operand = null;
 
-document.getElementById('result').value = '0';
+function read() {
+  return document.getElementById('result').value || '0';
+}
+
+function write(value) {
+  document.getElementById('result').value = value;
+}
 
 function toInput(id) {
-  console.log(operand);
-  console.log(initialState);
-  let temp = document.getElementById('result').value;
   if (initialState) {
-    clearValue();
-    initialState = false;
+    write('');
   }
-  if (temp === '0') document.getElementById('result').value = id;
-  else document.getElementById('result').value += id;
-}
-
-function toInputClean(id){
-  clearValue();
-  toInput(id);
-}
-
-function fromInput(){
-  return document.getElementById('result').value;
-}
-
-function fromInputClean(){
-  let result = document.getElementById('result').value;
-  clearValue();
-  return result;
+  if ((initialState && id === '0') || (read().includes('.') && id === '.')) {
+    return;
+  }
+  if (read()[0] === '0' && read().length < 2 && id !== '.' ) {
+    write(read().substring(1) + id);
+  } else if (read()[0] === '-' && read().length < 2 && id === '.'){
+    write(read() + '0' + id);
+  } else {
+    write(read() + id);
+  }
+  initialState = false;
 }
 
 function initAction(id){
-  initialState = true;
-  if (operand === null){
-    a = Number(fromInput());
+  if(!operand) {
+    a = Number(read());
     operand = id;
-  }
-  else{
-    operand = id;
-    switchOperand();
-    toInput(a.toString());
     initialState = true;
-  }
-}
-
-function switchOperand(){
-  switch(operand){
-    case '-': a -= Number(fromInputClean());
-      break;
-    case '+': a += Number(fromInputClean());
-      break;
-    case '*': a *= Number(fromInputClean());
-      break;
-    case '/': a = a / Number(fromInputClean());
-      break;
+  } else {
+    calcResult();
+    operand = id;
   }
 }
 
 function getResult(){
-  switchOperand();
-  toInputClean(a.toString());
-  a = 0;
-  initialState = true;
-  operand = null;
+  let b = Number(read());
+  if (operand) {
+    switch (operand) {
+      case '-':
+        write(a - b);
+        break;
+      case '+':
+        write(a + b);
+        break;
+      case '*':
+        write(a * b);
+        break;
+      case '/':
+        write(a / b);
+        break;
+    }
+    a = Number(read());
+    b = null;
+    operand = null;
+    initialState = true;
+  }
 }
 
 function clearValue() {
-  document.getElementById('result').value = '';
+  write('0');
+  a = null;
+  operand = null;
+  initialState = true;
 }
 
-function clearToInitialState() {
-  clearValue();
-  a = 0;
-  initialState = true;
-  operand = null;
+function changeSign() {
+  if (initialState) {
+    a && !operand ? write(read()[0] === '-' ? read().substring(1) : '-' + read()) : write('-');
+    initialState = false;
+  } else {
+    if (read()[0] === '-') {
+      if (read().length === 1) {
+        initialState = true;
+      }
+      write(read().substring(1));
+    } else {
+      write('-' + read());
+    }
+  }
 }
