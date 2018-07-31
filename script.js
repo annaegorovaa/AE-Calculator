@@ -13,6 +13,7 @@ function write(value) {
 document.onkeypress = typeSymbol;
 
 function typeSymbol(event) {
+  event.preventDefault();
   let x = event.key || event.which;
   console.log(x);
   if (x.match(/[0-9]/)) {
@@ -28,7 +29,6 @@ function typeSymbol(event) {
   } else {
     return;
   }
-  event.preventDefault();
 }
 
 function addSymbol(value) {
