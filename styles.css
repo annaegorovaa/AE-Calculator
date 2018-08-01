@@ -1,25 +1,3 @@
-body {
-    background-color: #d3cdb1;
-    padding: 40px;
-    text-align: center;
-    font-size: 16pt;
-}
-
-input {
-    font-size: 30px;
-}
-
-h1{
-    font-size: 46pt;
-}
-
-button{
-    width: 60px;
-    height: 60px;
-
-}
-
-.button{
-    background: aliceblue;
-    font-size: 30px;
+div.spacing div.row {
+    margin:5px;
 }
