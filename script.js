@@ -15,7 +15,7 @@ function write(value) {
 }
 
 function writeToLog(value) {
-  document.getElementById('log').innerHTML = value;
+  document.getElementById('log').innerText += value;
 }
 
 document.onkeypress = typeSymbol;
@@ -61,8 +61,11 @@ function addOperation(value){
     memory = Number(read());
     operation = value;
     firstDigit = true;
-    writeToLog(`${readFromLog()}<ul>${memory} ${operation}</ul>`);
+    writeToLog(`${memory} ${operation}`);
   } else {
+    if (readFromLog().slice(-1) === '\n') {
+      writeToLog(`${memory} ${operation}`);
+    }
     calcResult();
     operation = value;
   }
@@ -91,23 +94,26 @@ function calcPercent() {
 
 function calcResult() {
   let b = Number(read());
+  if (readFromLog().slice(-1) === '\n') {
+    writeToLog(`${memory} ${operation}`);
+  }
   if (operation) {
     switch (operation) {
       case '-':
         write(memory - b);
-        writeToLog(`${readFromLog()}${b} = ${memory - b}`);
+        writeToLog(` ${b} = ${memory - b}\n`);
         break;
       case '+':
         write(memory + b);
-        writeToLog(`${readFromLog()}${b} = ${memory + b}`);
+        writeToLog(` ${b} = ${memory + b}\n`);
         break;
       case '*':
         write(memory * b);
-        writeToLog(`${readFromLog()}${b} = ${memory * b}`);
+        writeToLog(` ${b} = ${memory * b}\n`);
         break;
       case '/':
         write(memory / b);
-        writeToLog(`${readFromLog()}${b} = ${memory / b}`);
+        writeToLog(` ${b} = ${memory / b}\n`);
         break;
     }
     memory = Number(read());
