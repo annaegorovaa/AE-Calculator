@@ -6,8 +6,16 @@ function read() {
   return document.getElementById('display').value || '0';
 }
 
+function readFromLog() {
+  return document.getElementById('log').innerText;
+}
+
 function write(value) {
   document.getElementById('display').value = value;
+}
+
+function writeToLog(value) {
+  document.getElementById('log').innerText += value;
 }
 
 document.onkeypress = typeSymbol;
@@ -53,7 +61,11 @@ function addOperation(value){
     memory = Number(read());
     operation = value;
     firstDigit = true;
+    writeToLog(`${memory} ${operation}`);
   } else {
+    if (readFromLog().slice(-1) === '\n') {
+      writeToLog(`${memory} ${operation}`);
+    }
     calcResult();
     operation = value;
   }
@@ -82,19 +94,26 @@ function calcPercent() {
 
 function calcResult() {
   let b = Number(read());
+  if (readFromLog().slice(-1) === '\n') {
+    writeToLog(`${memory} ${operation}`);
+  }
   if (operation) {
     switch (operation) {
       case '-':
         write(memory - b);
+        writeToLog(` ${b} = ${memory - b}\n`);
         break;
       case '+':
         write(memory + b);
+        writeToLog(` ${b} = ${memory + b}\n`);
         break;
       case '*':
         write(memory * b);
+        writeToLog(` ${b} = ${memory * b}\n`);
         break;
       case '/':
         write(memory / b);
+        writeToLog(` ${b} = ${memory / b}\n`);
         break;
     }
     memory = Number(read());
