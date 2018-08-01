@@ -6,8 +6,16 @@ function read() {
   return document.getElementById('display').value || '0';
 }
 
+function readFromLog() {
+  return document.getElementById('log').innerText;
+}
+
 function write(value) {
   document.getElementById('display').value = value;
+}
+
+function writeToLog(value) {
+  document.getElementById('log').innerHTML = value;
 }
 
 document.onkeypress = typeSymbol;
@@ -53,6 +61,7 @@ function addOperation(value){
     memory = Number(read());
     operation = value;
     firstDigit = true;
+    writeToLog(`${readFromLog()}<ul>${memory} ${operation}</ul>`);
   } else {
     calcResult();
     operation = value;
@@ -86,15 +95,19 @@ function calcResult() {
     switch (operation) {
       case '-':
         write(memory - b);
+        writeToLog(`${readFromLog()}${b} = ${memory - b}`);
         break;
       case '+':
         write(memory + b);
+        writeToLog(`${readFromLog()}${b} = ${memory + b}`);
         break;
       case '*':
         write(memory * b);
+        writeToLog(`${readFromLog()}${b} = ${memory * b}`);
         break;
       case '/':
         write(memory / b);
+        writeToLog(`${readFromLog()}${b} = ${memory / b}`);
         break;
     }
     memory = Number(read());
