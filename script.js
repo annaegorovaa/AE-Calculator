@@ -2,6 +2,10 @@ let memory = null;
 let operation = null;
 let firstDigit = true;
 
+window.onload = () => {
+  write(0);
+}
+
 function read() {
   return document.getElementById('display').value || '0';
 }
@@ -18,13 +22,16 @@ function writeToLog(value) {
   document.getElementById('log').innerText += value;
 }
 
-document.onkeypress = typeSymbol;
+function preventInput() {
+  return false;
+}
+
+document.onkeydown = typeSymbol;
 
 function typeSymbol(event) {
-  event.preventDefault();
   let x = event.key || event.which;
   console.log(x);
-  if (x.match(/[0-9]/)) {
+  if (x.match(/^[0-9]$/)) {
     addSymbol(x);
   } else if (x.match(/[/*-+]/)) {
     addOperation(x);
@@ -37,6 +44,7 @@ function typeSymbol(event) {
   } else {
     return;
   }
+  event.preventDefault();
 }
 
 function addSymbol(value) {
