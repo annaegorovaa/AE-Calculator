@@ -4,7 +4,7 @@ let firstDigit = true;
 
 window.onload = () => {
   write(0);
-}
+};
 
 function read() {
   return document.getElementById('display').value || '0';
