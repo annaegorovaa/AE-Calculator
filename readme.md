@@ -14,7 +14,7 @@ on integers and floating-point numbers.
 * Input from keyboard
 * Operation log
 
-# creenshots
+# Screenshots
 ![](Calc_image.PNG)
 
 # Built With
