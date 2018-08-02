@@ -30,7 +30,6 @@ document.onkeydown = typeSymbol;
 
 function typeSymbol(event) {
   let x = event.key || event.which;
-  console.log(x);
   if (x.match(/^[0-9]$/)) {
     addSymbol(x);
   } else if (x.match(/[/*-+]/)) {
@@ -42,7 +41,7 @@ function typeSymbol(event) {
   } else if (x === 'Escape') {
     clearValue();
   } else {
-    return;
+    return false;
   }
   event.preventDefault();
 }
