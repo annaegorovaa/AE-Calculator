@@ -26,7 +26,7 @@ document.onkeydown = typeSymbol;
 
 function typeSymbol(event) {
   let x = event.key || event.which;
-  if (x.match(/^[0-9]$/)) {
+  if (x.match(/^[0-9.]$/)) {
     addSymbol(x);
   } else if (x.match(/[/*-+]/)) {
     addOperation(x);
@@ -37,7 +37,7 @@ function typeSymbol(event) {
   } else if (x === 'Escape') {
     clearValue();
   } else {
-    return false;
+    return;
   }
   event.preventDefault();
 }
@@ -103,20 +103,20 @@ function calcResult() {
   if (operation) {
     switch (operation) {
       case '-':
-        write(memory - b);
-        writeToLog(` ${b} = ${memory - b}\n`);
+        write(new Decimal(memory).minus(b));
+        writeToLog(` ${b} = ${new Decimal(memory).minus(b)}\n`);
         break;
       case '+':
-        write(memory + b);
-        writeToLog(` ${b} = ${memory + b}\n`);
+        write(new Decimal(memory).plus(b));
+        writeToLog(` ${b} = ${new Decimal(memory).plus(b)}\n`);
         break;
       case '*':
-        write(memory * b);
-        writeToLog(` ${b} = ${memory * b}\n`);
+        write(new Decimal(memory).times(b));
+        writeToLog(` ${b} = ${new Decimal(memory).times(b)}\n`);
         break;
       case '/':
-        write(memory / b);
-        writeToLog(` ${b} = ${memory / b}\n`);
+        write(new Decimal(memory).dividedBy(b));
+        writeToLog(` ${b} = ${new Decimal(memory).dividedBy(b)}\n`);
         break;
     }
     memory = Number(read());
