@@ -22,10 +22,6 @@ function writeToLog(value) {
   document.getElementById('log').innerText += value;
 }
 
-function preventInput() {
-  return false;
-}
-
 document.onkeydown = typeSymbol;
 
 function typeSymbol(event) {
@@ -101,7 +97,7 @@ function calcPercent() {
 
 function calcResult() {
   let b = Number(read());
-  if (readFromLog().slice(-1) === '\n') {
+  if (operation && readFromLog().slice(-1) === '\n') {
     writeToLog(`${memory} ${operation}`);
   }
   if (operation) {
