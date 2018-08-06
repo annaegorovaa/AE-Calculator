@@ -23,5 +23,9 @@
   },
   "dependencies": {
     "decimal.js-light": "^2.4.1"
+  },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node"
   }
 }
