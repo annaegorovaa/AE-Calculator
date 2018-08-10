@@ -1,3 +1,5 @@
+const Decimal = require('decimal.js-light');
+
 let memory = null;
 let operation = null;
 let firstDigit = true;
@@ -5,6 +7,26 @@ let firstDigit = true;
 window.onload = () => {
   write(0);
 };
+
+document.getElementById('1').addEventListener('click', () => addSymbol('1'));
+document.getElementById('2').addEventListener('click', () => addSymbol('2'));
+document.getElementById('3').addEventListener('click', () => addSymbol('3'));
+document.getElementById('4').addEventListener('click', () => addSymbol('4'));
+document.getElementById('5').addEventListener('click', () => addSymbol('5'));
+document.getElementById('6').addEventListener('click', () => addSymbol('6'));
+document.getElementById('7').addEventListener('click', () => addSymbol('7'));
+document.getElementById('8').addEventListener('click', () => addSymbol('8'));
+document.getElementById('9').addEventListener('click', () => addSymbol('9'));
+document.getElementById('0').addEventListener('click', () => addSymbol('0'));
+document.getElementById('.').addEventListener('click', () => addSymbol('.'));
+document.getElementById('minus').addEventListener('click', () => addOperation('-'));
+document.getElementById('plus').addEventListener('click', () => addOperation('+'));
+document.getElementById('divide').addEventListener('click', () => addOperation('/'));
+document.getElementById('multiply').addEventListener('click', () => addOperation('*'));
+document.getElementById('change-sign').addEventListener('click', () => changeSign());
+document.getElementById('percent').addEventListener('click', () => calcPercent());
+document.getElementById('equals').addEventListener('click', () => equalsListener());
+document.getElementById('clear').addEventListener('click', () => clearValue());
 
 function read() {
   return document.getElementById('display').value || '0';
@@ -33,7 +55,7 @@ function typeSymbol(event) {
   } else if (x === '%') {
     calcPercent();
   } else if (x === 'Enter') {
-    calcResult();
+    equalsListener();
   } else if (x === 'Escape') {
     clearValue();
   } else {
@@ -69,7 +91,7 @@ function addOperation(value){
     if (readFromLog().slice(-1) === '\n') {
       writeToLog(`${memory} ${operation}`);
     }
-    calcResult();
+    equalsListener();
     operation = value;
   }
 }
@@ -92,10 +114,10 @@ function changeSign() {
 
 function calcPercent() {
   write(Number(read()) * memory / 100);
-  calcResult();
+  equalsListener();
 }
 
-function calcResult() {
+function equalsListener() {
   let b = Number(read());
   if (operation && readFromLog().slice(-1) === '\n') {
     writeToLog(`${memory} ${operation}`);
