@@ -150,6 +150,11 @@ function equalsListener() {
 
 function clearValue() {
   write('0');
+  let log = document.getElementById('log');
+  let logText = log.innerText;
+  if (logText.charAt(logText.length - 1) !== '\n') {
+    log.innerText = logText.substring(0, logText.lastIndexOf('\n') + 1);
+  }
   memory = null;
   operation = null;
   firstDigit = true;
