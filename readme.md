@@ -19,6 +19,3 @@ on integers and floating-point numbers.
 
 # Built With
 Vanilla JS ES2018
-
-# Authors
-Anna Egorova
