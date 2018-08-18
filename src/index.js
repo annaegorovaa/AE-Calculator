@@ -136,6 +136,7 @@ function clearValue() {
   if (log.charAt(log.length - 1) !== '\n') {
     log = log.substring(0, log.lastIndexOf('\n') + 1);
   }
+  writeToLog(log);
   storedNumber = '';
   currentNumber = '';
   operation = '';
