@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "deploy": "gh-pages -d dist",
-    "build": "webpack",
-    "start": "webpack --config webpack.config.js"
+    "build -prod": "webpack --config webpack.config.prod.js",
+    "build -dev": "webpack --config webpack.config.dev.js"
   },
   "repository": {
     "type": "git",
