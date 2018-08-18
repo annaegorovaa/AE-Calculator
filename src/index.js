@@ -1,7 +1,9 @@
 const Decimal = require('decimal.js-light');
 
-let memory = null;
-let operation = null;
+let log = '';
+let storedNumber = '';
+let currentNumber = '';
+let operation = '';
 let firstDigit = true;
 
 window.onload = () => {
@@ -23,25 +25,17 @@ document.getElementById('minus').addEventListener('click', () => addOperation('-
 document.getElementById('plus').addEventListener('click', () => addOperation('+'));
 document.getElementById('divide').addEventListener('click', () => addOperation('/'));
 document.getElementById('multiply').addEventListener('click', () => addOperation('*'));
-document.getElementById('change-sign').addEventListener('click', () => changeSign());
+document.getElementById('change-sign').addEventListener('click', () => addSymbol('-'));
 document.getElementById('percent').addEventListener('click', () => calcPercent());
 document.getElementById('equals').addEventListener('click', () => equalsListener());
 document.getElementById('clear').addEventListener('click', () => clearValue());
-
-function read() {
-  return document.getElementById('display').value || '0';
-}
-
-function readFromLog() {
-  return document.getElementById('log').innerText;
-}
 
 function write(value) {
   document.getElementById('display').value = value;
 }
 
 function writeToLog(value) {
-  document.getElementById('log').innerText += value;
+  document.getElementById('log').innerText = value;
 }
 
 document.onkeydown = typeSymbol;
@@ -66,96 +60,84 @@ function typeSymbol(event) {
 
 function addSymbol(value) {
   if (firstDigit) {
-    write('');
+    currentNumber = '';
   }
-  if ((firstDigit && value === '0') || (read().includes('.') && value === '.')) {
+  if ((value === '0' && currentNumber === '0') || (value === '.' && currentNumber.includes('.'))) {
     return;
+  } else if (value === '.' && !currentNumber.length) {
+    currentNumber = '0';
   }
-  if (read()[0] === '0' && read().length < 2 && value !== '.' ) {
-    write(read().substring(1) + value);
-  } else if (read()[0] === '-' && read().length < 2 && value === '.'){
-    write(read() + '0' + value);
+  if (value === '-') {
+    currentNumber = currentNumber.charAt(0) === value ? currentNumber.substring(1) : value + currentNumber;
   } else {
-    write(read() + value);
+    if (value !== '.' && currentNumber === '0') {
+      currentNumber = '';
+    }
+    currentNumber += value;
   }
   firstDigit = false;
+  write(currentNumber);
 }
 
 function addOperation(value){
   if(!operation) {
-    memory = Number(read());
+    storedNumber = Number(currentNumber);
     operation = value;
     firstDigit = true;
-    writeToLog(`${memory} ${operation}`);
+    log += `${storedNumber} ${operation}`;
   } else {
-    if (readFromLog().slice(-1) === '\n') {
-      writeToLog(`${memory} ${operation}`);
+    if (log.slice(-1) === '\n') {
+      log += `${storedNumber} ${operation}`;
     }
     equalsListener();
     operation = value;
   }
-}
-
-function changeSign() {
-  if (firstDigit) {
-    memory && !operation ? write(read()[0] === '-' ? read().substring(1) : '-' + read()) : write('-');
-    firstDigit = false;
-  } else {
-    if (read()[0] === '-') {
-      if (read().length === 1) {
-        firstDigit = true;
-      }
-      write(read().substring(1));
-    } else {
-      write('-' + read());
-    }
-  }
+  currentNumber = '';
+  writeToLog(log);
 }
 
 function calcPercent() {
-  write(Number(read()) * memory / 100);
+  currentNumber = Number(currentNumber) * storedNumber / 100;
+  write(currentNumber);
   equalsListener();
 }
 
 function equalsListener() {
-  let b = Number(read());
-  if (operation && readFromLog().slice(-1) === '\n') {
-    writeToLog(`${memory} ${operation}`);
+  let b = Number(currentNumber);
+  if (operation && log.slice(-1) === '\n') {
+    log += `${storedNumber} ${operation}`;
   }
   if (operation) {
     switch (operation) {
       case '-':
-        write(new Decimal(memory).minus(b));
-        writeToLog(` ${b} = ${new Decimal(memory).minus(b)}\n`);
+        currentNumber = new Decimal(storedNumber).minus(b);
         break;
       case '+':
-        write(new Decimal(memory).plus(b));
-        writeToLog(` ${b} = ${new Decimal(memory).plus(b)}\n`);
+        currentNumber = new Decimal(storedNumber).plus(b);
         break;
       case '*':
-        write(new Decimal(memory).times(b));
-        writeToLog(` ${b} = ${new Decimal(memory).times(b)}\n`);
+        currentNumber = new Decimal(storedNumber).times(b);
         break;
       case '/':
-        write(new Decimal(memory).dividedBy(b));
-        writeToLog(` ${b} = ${new Decimal(memory).dividedBy(b)}\n`);
+        currentNumber = new Decimal(storedNumber).dividedBy(b);
         break;
     }
-    memory = Number(read());
-    b = null;
-    operation = null;
+    write(currentNumber);
+    log += ` ${b} = ${currentNumber}\n`;
+    writeToLog(log);
+    storedNumber = Number(currentNumber);
+    operation = '';
     firstDigit = true;
   }
 }
 
 function clearValue() {
   write('0');
-  let log = document.getElementById('log');
-  let logText = log.innerText;
-  if (logText.charAt(logText.length - 1) !== '\n') {
-    log.innerText = logText.substring(0, logText.lastIndexOf('\n') + 1);
+  if (log.charAt(log.length - 1) !== '\n') {
+    log = log.substring(0, log.lastIndexOf('\n') + 1);
   }
-  memory = null;
-  operation = null;
-  firstDigit = true;
+  storedNumber = '';
+  currentNumber = '';
+  operation = '';
+  firstDigit = '';
 }
