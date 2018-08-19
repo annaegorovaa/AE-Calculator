@@ -10,8 +10,6 @@ window.onload = () => {
     }
   );
 
-  calculator.write(0);
-
   function addListener(id, callback) {
     document.getElementById(id).addEventListener('click', callback);
   }
