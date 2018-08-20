@@ -12,7 +12,7 @@ function Calculator(writeCallback, writeToLogCallback) {
   this.handleKey = function(x) {
     if (x.match(/^[0-9.]$/)) {
       this.addSymbol(x);
-    } else if (x.match(/[/*-+]/)) {
+    } else if (x.match(/[/*\-+]/)) {
       this.addOperation(x);
     } else if (x === '%') {
       this.calcPercent();
