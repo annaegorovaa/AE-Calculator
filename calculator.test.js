@@ -34,7 +34,7 @@ test('handleKey should handle enter', () => {
   expect(calc.handleKey('Enter')).toBe(true);
 });
 
-test('handleKey should handle unknown key', () => {
+test('handleKey should not handle unknown key', () => {
   expect(calc.handleKey('r')).toBe(false);
   expect(calc.handleKey('?')).toBe(false);
   expect(calc.handleKey('$')).toBe(false);
