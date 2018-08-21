@@ -6,7 +6,7 @@ let log = '';
 
 beforeEach(() => {
   const writeCallback = (val) => {
-    output = val;
+    output = val.toString();
   };
   const writeToLogCallback = (val) => {
     log = val;
@@ -144,5 +144,90 @@ describe('test addOperation function', () => {
     calc.addOperation('*');
     calc.addOperation('*');
     expect(log).toBe('0 * 0 = 0\n');
+  });
+});
+
+describe('test calcPercent function', () => {
+  test('should return entered percent of the equation first operand', () => {
+    calc.addSymbol('1');
+    calc.addOperation('+');
+    calc.addSymbol('1');
+    calc.calcPercent('1');
+    expect(output).toEqual('1.01'); //maybe incorrect
+  });
+});
+
+describe('test equalsListener function', () => {
+  test('if operation minus should return difference', () => {
+    calc.addSymbol('5');
+    calc.addOperation('-');
+    calc.addSymbol('2');
+    calc.equalsListener();
+    expect(output).toEqual('3');
+  });
+
+  test('if operation plus should return sum', () => {
+    calc.addSymbol('3');
+    calc.addOperation('+');
+    calc.addSymbol('2');
+    calc.equalsListener();
+    expect(output).toEqual('5');
+  });
+
+  test('if operation times should return product', () => {
+    calc.addSymbol('5');
+    calc.addOperation('*');
+    calc.addSymbol('2');
+    calc.equalsListener();
+    expect(output).toEqual('10');
+  });
+
+  test('if operation dividedBy should return quotient', () => {
+    calc.addSymbol('5');
+    calc.addOperation('/');
+    calc.addSymbol('2');
+    calc.equalsListener();
+    expect(output).toEqual('2.5');
+  });
+
+  test('should return correct floating point result', () => {
+    calc.addSymbol('0');
+    calc.addSymbol('.');
+    calc.addSymbol('1');
+    calc.addOperation('+');
+    calc.addSymbol('0');
+    calc.addSymbol('.');
+    calc.addSymbol('2');
+    calc.equalsListener();
+    expect(output).toEqual('0.3');
+  });
+});
+
+describe('test clearValue function', () => {
+  test('if no operation should output zero', () => {
+    calc.addSymbol('1');
+    calc.clearValue();
+    expect(output).toBe('0');
+  });
+
+  test('if operation should output zero', () => {
+    calc.addSymbol('1');
+    calc.addOperation('*');
+    calc.clearValue();
+    expect(output).toBe('0');
+  });
+
+  test('if no operation should not log', () => {
+    calc.addSymbol('1');
+    calc.addOperation('*');
+    calc.clearValue();
+    expect(log).toBe('');
+  });
+
+  test('if operation should not log', () => {
+    calc.addSymbol('1');
+    calc.addOperation('*');
+    calc.clearValue();
+    expect(log).toBe('');
   });
 });
