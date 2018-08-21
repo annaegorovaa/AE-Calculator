@@ -2,12 +2,16 @@ const Calculator = require('./src/calculator');
 
 let calc = null;
 let output = '';
+let log = '';
 
 beforeEach(() => {
   const writeCallback = (val) => {
     output = val;
   };
-  calc = new Calculator(writeCallback, () => {});
+  const writeToLogCallback = (val) => {
+    log = val;
+  };
+  calc = new Calculator(writeCallback, writeToLogCallback);
 });
 
 describe('test handleKey function', () => {
@@ -121,5 +125,24 @@ describe('test addSymbol function', () => {
       calc.addSymbol('.');
       expect(output).toBe('1.');
     });
+  });
+});
+
+describe('test addOperation function', () => {
+  test('if number and no operation should log number and operation', () => {
+    calc.addSymbol('1');
+    calc.addOperation('+');
+    expect(log).toBe('1 +');
+  });
+
+  test('if no number and no operation should log zero and operation', () => {
+    calc.addOperation('-');
+    expect(log).toBe('0 -');
+  });
+
+  test('if operation invoked twice should log result and line break', () => {
+    calc.addOperation('*');
+    calc.addOperation('*');
+    expect(log).toBe('0 * 0 = 0\n');
   });
 });
