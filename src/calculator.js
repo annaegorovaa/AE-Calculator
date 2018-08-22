@@ -1,115 +1,123 @@
 const Decimal = require('decimal.js-light');
 
 function Calculator(writeCallback, writeToLogCallback) {
-  let log = '';
-  let storedNumber = '';
-  let currentNumber = '';
-  let operation = '';
-  let firstDigit = true;
+  this.log = '';
+  this.storedNumber = '';
+  this.currentNumber = '';
+  this.operation = '';
+  this.firstDigit = true;
+  this.writeCallback = writeCallback;
+  this.writeToLogCallback = writeToLogCallback;
+  this.handleKey = handleKey;
+  this.addSymbol = addSymbol;
+  this.addOperation = addOperation;
+  this.calcPercent = calcPercent;
+  this.equalsListener = equalsListener;
+  this.clearValue = clearValue;
 
   writeCallback('0');
+}
 
-  this.handleKey = function(x) {
-    if (x.match(/^[0-9.]$/)) {
-      this.addSymbol(x);
-    } else if (x.match(/[/*\-+]/)) {
-      this.addOperation(x);
-    } else if (x === '%') {
-      this.calcPercent();
-    } else if (x === 'Enter') {
-      this.equalsListener();
-    } else if (x === 'Escape') {
-      this.clearValue();
-    } else {
-      return false;
-    }
-    return true;
-  };
-
-  this.addSymbol = function(value) {
-    if (firstDigit) {
-      currentNumber = '';
-    }
-    if ((value === '0' && currentNumber === '0') || (value === '.' && currentNumber.includes('.'))) {
-      return;
-    } else if (value === '.' && !currentNumber.length) {
-      currentNumber = '0';
-    }
-    if (value === '-') {
-      currentNumber = currentNumber.charAt(0) === value ? currentNumber.substring(1) : value + currentNumber;
-    } else {
-      if (value !== '.' && currentNumber === '0') {
-        currentNumber = '';
-      }
-      currentNumber += value;
-    }
-    firstDigit = false;
-    writeCallback(currentNumber);
-  };
-
-  this.addOperation = function(value) {
-    if (!operation) {
-      storedNumber = Number(currentNumber);
-      operation = value;
-      firstDigit = true;
-      log += `${storedNumber} ${operation}`;
-    } else {
-      if (log.slice(-1) === '\n') {
-        log += `${storedNumber} ${operation}`;
-      }
-      this.equalsListener();
-      operation = value;
-    }
-    currentNumber = '';
-    writeToLogCallback(log);
-  };
-
-  this.calcPercent = function() {
-    currentNumber = Number(currentNumber) * storedNumber / 100;
-    writeCallback(currentNumber);
+function handleKey (x) {
+  if (x.match(/^[0-9.]$/)) {
+    this.addSymbol(x);
+  } else if (x.match(/[/*\-+]/)) {
+    this.addOperation(x);
+  } else if (x === '%') {
+    this.calcPercent();
+  } else if (x === 'Enter') {
     this.equalsListener();
-  };
+  } else if (x === 'Escape') {
+    this.clearValue();
+  } else {
+    return false;
+  }
+  return true;
+}
 
-  this.equalsListener = function() {
-    let b = Number(currentNumber);
-    if (operation && log.slice(-1) === '\n') {
-      log += `${storedNumber} ${operation}`;
+function addSymbol(value) {
+  if (this.firstDigit) {
+    this.currentNumber = '';
+  }
+  if ((value === '0' && this.currentNumber === '0') || (value === '.' && this.currentNumber.includes('.'))) {
+    return;
+  } else if (value === '.' && !this.currentNumber.length) {
+    this.currentNumber = '0';
+  }
+  if (value === '-') {
+    this.currentNumber = this.currentNumber.charAt(0) === value ? this.currentNumber.substring(1) : value + this.currentNumber;
+  } else {
+    if (value !== '.' && this.currentNumber === '0') {
+      this.currentNumber = '';
     }
-    if (operation) {
-      switch (operation) {
-        case '-':
-          currentNumber = new Decimal(storedNumber).minus(b);
-          break;
-        case '+':
-          currentNumber = new Decimal(storedNumber).plus(b);
-          break;
-        case '*':
-          currentNumber = new Decimal(storedNumber).times(b);
-          break;
-        case '/':
-          currentNumber = new Decimal(storedNumber).dividedBy(b);
-          break;
-      }
-      writeCallback(currentNumber);
-      log += ` ${b} = ${currentNumber}\n`;
-      writeToLogCallback(log);
-      storedNumber = Number(currentNumber);
-      operation = '';
-      firstDigit = true;
-    }
-  };
+    this.currentNumber += value;
+  }
+  this.firstDigit = false;
+  this.writeCallback(this.currentNumber);
+}
 
-  this.clearValue = function() {
-    writeCallback('0');
-    if (log.charAt(log.length - 1) !== '\n') {
-      log = log.substring(0, log.lastIndexOf('\n') + 1);
+function addOperation(value) {
+  if (!this.operation) {
+    this.storedNumber = Number(this.currentNumber);
+    this.operation = value;
+    this.firstDigit = true;
+    this.log += `${this.storedNumber} ${this.operation}`;
+  } else {
+    if (this.log.slice(-1) === '\n') {
+      this.log += `${this.storedNumber} ${this.operation}`;
     }
-    writeToLogCallback(log);
-    storedNumber = '';
-    currentNumber = '';
-    operation = '';
-    firstDigit = '';
-  };
+    this.equalsListener();
+    this.operation = value;
+  }
+  this.currentNumber = '';
+  this.writeToLogCallback(this.log);
+}
+
+function calcPercent() {
+  this.currentNumber = Number(this.currentNumber) * this.storedNumber / 100;
+  this.writeCallback(this.currentNumber);
+  this.equalsListener();
+}
+
+function equalsListener() {
+  let b = Number(this.currentNumber);
+  if (this.operation && this.log.slice(-1) === '\n') {
+    this.log += `${this.storedNumber} ${this.operation}`;
+  }
+  if (this.operation) {
+    switch (this.operation) {
+      case '-':
+        this.currentNumber = new Decimal(this.storedNumber).minus(b);
+        break;
+      case '+':
+        this.currentNumber = new Decimal(this.storedNumber).plus(b);
+        break;
+      case '*':
+        this.currentNumber = new Decimal(this.storedNumber).times(b);
+        break;
+      case '/':
+        this.currentNumber = new Decimal(this.storedNumber).dividedBy(b);
+        break;
+    }
+    this.writeCallback(this.currentNumber);
+    this.log += ` ${b} = ${this.currentNumber}\n`;
+    this.writeToLogCallback(this.log);
+    this.storedNumber = Number(this.currentNumber);
+    this.operation = '';
+    this.firstDigit = true;
+  }
+}
+
+function clearValue() {
+  this.writeCallback('0');
+  if (this.log.charAt(this.log.length - 1) !== '\n') {
+    this.log = this.log.substring(0, this.log.lastIndexOf('\n') + 1);
+  }
+  this.writeToLogCallback(this.log);
+  this.storedNumber = '';
+  this.currentNumber = '';
+  this.operation = '';
+  this.firstDigit = '';
 }
 
 module.exports = Calculator;
